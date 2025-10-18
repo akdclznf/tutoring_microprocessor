@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -13,16 +13,16 @@
 
 int main(void) {
 
-	MCUCR = 0x0;  // Æ÷Æ® ÀÔÃâ·Â ¼³Á¤
+	MCUCR = 0x0;  // í¬íŠ¸ ìž…ì¶œë ¥ ì„¤ì •
 	XMCRB = 0x0;
 
-	DDRA |= _BV(0);  // PORTAÀÇ 0¹ø ÇÉÀ» Ãâ·ÂÀ¸·Î ¼³Á¤
+	DDRA |= _BV(0);  // PORTAì˜ 0ë²ˆ í•€ì„ ì¶œë ¥ìœ¼ë¡œ ì„¤ì •
 
-	// LED ¶Ç´Â ºÎÀú 1ÃÊ¸¶´Ù ÀÛµ¿
-	while(1) {  // ¹«ÇÑ ¹Ýº¹¹®
+	// LED ë˜ëŠ” ë¶€ì € 1ì´ˆë§ˆë‹¤ ìž‘ë™
+	while(1) {  // ë¬´í•œ ë°˜ë³µë¬¸
 		PORTA |= _BV(0);  // led or buzzer ON
-		_delay_ms(1000);  // 1ÃÊ ´ë±â
+		_delay_ms(1000);  // 1ì´ˆ ëŒ€ê¸°
 		PORTA &= ~(_BV(0));  // led or buzzer OFF
-		_delay_ms(1000);  // 1ÃÊ ´ë±â
+		_delay_ms(1000);  // 1ì´ˆ ëŒ€ê¸°
 	}
 }

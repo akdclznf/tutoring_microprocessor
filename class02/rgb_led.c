@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -10,15 +10,16 @@
 #include <stdlib.h>
 #include <math.h>
 #include <avr/pgmspace.h>
+
 #include "rgb.h"
 
 int main(void) {
-	MCUCR = 0x0;  // Æ÷Æ® ÀÔÃâ·Â ¼³Á¤
+	MCUCR = 0x0;  // í¬íŠ¸ ì…ì¶œë ¥ ì„¤ì •
 	XMCRB = 0x0;
 
-	init_rgb_timer();  // fast pwm¼³Á¤ (rgb.h ÂüÁ¶)
+	init_rgb_timer();  // fast pwmì„¤ì • (rgb.h ì°¸ì¡°)
 
-	DDRB |= _BV(5);  // °¢ ÇÉ Ãâ·ÂÀ¸·Î ¼³Á¤
+	DDRB |= _BV(5);  // ê° í•€ ì¶œë ¥ìœ¼ë¡œ ì„¤ì •
 	DDRB |= _BV(6);
 	DDRB |= _BV(7);
 

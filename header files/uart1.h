@@ -1,10 +1,10 @@
-// UART1 ÃÊ±âÈ­
+// UART1 ì´ˆê¸°í™”
 void uart1_init(void) {
 	DDRD &= ~(_BV(2));  // Rx1
 	DDRD |= _BV(3);  // Tx1
 	UCSR1B = 0x00;  // interrupt disable while setting baud rate
 	UCSR1A = 0x00;  // Asynchronous Normal Mode
-	UCSR1C = 0x06;  // ºñµ¿±â ¹æ½Ä, No parity bit, 1 stop bit 
+	UCSR1C = 0x06;  // ë¹„ë™ê¸° ë°©ì‹, No parity bit, 1 stop bit 
 	UBRR1L = 0x67;  // set baud rate 0x67 for 9600bps, 0x33 for 19200, 0x19 for 38400,  0x6 for 115200bps
 	UBRR1H = 0x00;
 	UCSR1B = 0x08;  // transmitter enable only
@@ -26,7 +26,7 @@ int uart1_getchar(void) {
 */
 void uart1_puts(const char *s) {
     while (*s) {
-        uart1_putchar(*s);  // ÇÏ³ª¾¿ Ãâ·Â
+        uart1_putchar(*s);  // í•˜ë‚˜ì”© ì¶œë ¥
         s++;
     }
 }

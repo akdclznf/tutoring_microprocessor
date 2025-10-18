@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -13,19 +13,19 @@
 
 #include "uart0.h"
 
-// Àü¿ª º¯¼ö ¼³Á¤
+// ì „ì—­ ë³€ìˆ˜ ì„¤ì •
 volatile int i = 0;
 volatile uint16_t count_overflow = 0;
 
 int main(void) {
-	_delay_ms(500);  // ºÎÆÃ ½Ã°£
+	_delay_ms(500);  // ë¶€íŒ… ì‹œê°„
 
-	MCUCR =0x0;  // port ÀÔÃâ·Â ¼³Á¤
+	MCUCR =0x0;  // port ìž…ì¶œë ¥ ì„¤ì •
 	XMCRB =0x0;
 
-	init_printf();  // printf »ç¿ë
+	init_printf();  // printf ì‚¬ìš©
 
-	DDRE &= ~(_BV(7));  // ½ºÀ§Ä¡ ÀÔ·Â ¼³Á¤
+	DDRE &= ~(_BV(7));  // ìŠ¤ìœ„ì¹˜ ìž…ë ¥ ì„¤ì •
 
 	TCCR0 &= ~(_BV(3));  // oc0 normal mode
 	TCCR0 &= ~(_BV(6));
@@ -34,32 +34,32 @@ int main(void) {
 	TCCR0 &= ~(_BV(1));
 	TCCR0 &= ~(_BV(0));
 
-	TCNT0 = 0;  // Ä«¿îÆ® ÃÊ±âÈ­
+	TCNT0 = 0;  // ì¹´ìš´íŠ¸ ì´ˆê¸°í™”
 
-	SREG |= _BV(7);  // Àü¿ª INT Çã¿ë
+	SREG |= _BV(7);  // ì „ì—­ INT í—ˆìš©
 
-	TIMSK |= _BV(0);  // Å¸ÀÌ¸Ó0 OVF INT Çã¿ë
+	TIMSK |= _BV(0);  // íƒ€ì´ë¨¸0 OVF INT í—ˆìš©
 
-	EIMSK |= _BV(7);  // INT7 ¿ÜºÎ ÀÎÅÍ·´Æ® »ç¿ë
+	EIMSK |= _BV(7);  // INT7 ì™¸ë¶€ ì¸í„°ëŸ½íŠ¸ ì‚¬ìš©
 	EICRB = EICRB | 0b11000000;  // rising edge trigger
 
-	i = 0;  // ¿Àµ¿ÀÛ ¹æÁö
+	i = 0;  // ì˜¤ë™ìž‘ ë°©ì§€
 
-	_delay_ms(500);  // ¾ÈÁ¤È­ ½Ã°£
+	_delay_ms(500);  // ì•ˆì •í™” ì‹œê°„
 
 	while(1) {
-		printf("i: %d\n\r", i);  // 1ÃÊ¸¶´Ù º¯¼ö Ãâ·Â
+		printf("i: %d\n\r", i);  // 1ì´ˆë§ˆë‹¤ ë³€ìˆ˜ ì¶œë ¥
 		_delay_ms(1000);
 	}
 }
 
 ISR(TIMER0_OVF_vect) {
-	count_overflow ++;  // ÀÎÅÍ·´Æ® È½¼ö Áõ°¡(¾à 1ms¸¶´Ù ÀÎÅÍ·´Æ® ¹ß»ý)
+	count_overflow ++;  // ì¸í„°ëŸ½íŠ¸ íšŸìˆ˜ ì¦ê°€(ì•½ 1msë§ˆë‹¤ ì¸í„°ëŸ½íŠ¸ ë°œìƒ)
 }
 
 ISR(INT7_vect) {
-	if (count_overflow >= 200) {  // ¾à 200ms µ¿¾ÈÀº ÀÎÅÍ·´Æ® Àç¹ß»ý ±ÝÁö(Ã¤ÅÍ¸µ ¹æÁö)
-		count_overflow = 0;  // ÀÎÅÍ·´Æ® È½¼ö ÃÊ±âÈ­
+	if (count_overflow >= 200) {  // ì•½ 200ms ë™ì•ˆì€ ì¸í„°ëŸ½íŠ¸ ìž¬ë°œìƒ ê¸ˆì§€(ì±„í„°ë§ ë°©ì§€)
+		count_overflow = 0;  // ì¸í„°ëŸ½íŠ¸ íšŸìˆ˜ ì´ˆê¸°í™”
 		i++;
 	}
 }

@@ -1,10 +1,10 @@
-// UART0 √ ±‚»≠
+// UART0 Ï¥àÍ∏∞Ìôî
 void uart0_init(void) {
 	DDRE &= ~(_BV(0));  // Rx0
 	DDRE |= _BV(1);  // Tx0
 	UCSR0B = 0x00;  // interrupt disable while setting baud rate
 	UCSR0A = 0x00;  // Asynchronous Normal Mode
-	UCSR0C = 0x06;  // ∫Òµø±‚ πÊΩƒ, No parity bit, 1 stop bit 
+	UCSR0C = 0x06;  // ÎπÑÎèôÍ∏∞ Î∞©Ïãù, No parity bit, 1 stop bit 
 	UBRR0L = 0x67;  // set baud rate 0x67 for 9600bps, 0x33 for 19200, 0x19 for 38400,  0x6 for 115200bps
 	UBRR0H = 0x00;
 	UCSR0B = 0x08;  // transmitter enable only

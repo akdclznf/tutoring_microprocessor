@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -12,19 +12,19 @@
 #include <avr/pgmspace.h>
 
 int main(void) {
-	MCUCR = 0x0;  // Æ÷Æ® ÀÔÃâ·Â ¼³Á¤
+	MCUCR = 0x0;  // í¬íŠ¸ ìž…ì¶œë ¥ ì„¤ì •
 	XMCRB = 0x0;
 
-	DDRA |= _BV(0);  // dc ¸ðÅÍÀÇ + ¿¬°á
-	DDRA |= _BV(1);  // dc ¸ðÅÍÀÇ - ¿¬°á
+	DDRA |= _BV(0);  // dc ëª¨í„°ì˜ + ì—°ê²°
+	DDRA |= _BV(1);  // dc ëª¨í„°ì˜ - ì—°ê²°
 
-	PORTA |= _BV(0);  // dc ¸ðÅÍ È¸Àü
+	PORTA |= _BV(0);  // dc ëª¨í„° íšŒì „
 	PORTA &= ~(_BV(1));
 	_delay_ms(4000);
-	PORTA &= ~(_BV(0));  // Á¤Áö
+	PORTA &= ~(_BV(0));  // ì •ì§€
 
-	PORTA |= _BV(1);  // dc ¸ðÅÍ ¹Ý´ë·Î È¸Àü
+	PORTA |= _BV(1);  // dc ëª¨í„° ë°˜ëŒ€ë¡œ íšŒì „
 	PORTA &= ~(_BV(0));
 	_delay_ms(4000);
-	PORTA &= ~(_BV(1));  // Á¤Áö
+	PORTA &= ~(_BV(1));  // ì •ì§€
 }

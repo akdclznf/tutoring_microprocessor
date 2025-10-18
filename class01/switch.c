@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -10,24 +10,25 @@
 #include <stdlib.h>
 #include <math.h>
 #include <avr/pgmspace.h>
+
 #include "uart0.h"
 
 int main(void) {
 
-	MCUCR = 0x0;  // Æ÷Æ® ÀÔÃâ·Â ¼³Á¤
+	MCUCR = 0x0;  // í¬íŠ¸ ìž…ì¶œë ¥ ì„¤ì •
 	XMCRB = 0x0;
 
-	init_printf();  // printf »ç¿ë (uart0.h¿¡ Æ÷ÇÔ)
+	init_printf();  // printf ì‚¬ìš© (uart0.hì— í¬í•¨)
 
-	DDRA &= ~(_BV(0));  // PORTAÀÇ 0¹ø ÇÉÀ» ÀÔ·ÂÀ¸·Î ¼³Á¤
+	DDRA &= ~(_BV(0));  // PORTAì˜ 0ë²ˆ í•€ì„ ìž…ë ¥ìœ¼ë¡œ ì„¤ì •
 
-	PORTA |= _BV(0);  // PORTAÀÇ 0¹ø ÇÉ¿¡ Ç®¾÷ ÀúÇ× È°¼º
+	PORTA |= _BV(0);  // PORTAì˜ 0ë²ˆ í•€ì— í’€ì—… ì €í•­ í™œì„±
 
-	// ½ºÀ§Ä¡¸¦ ´©¸£¸é "on" Ãâ·Â
-	while(1) {  // ¹«ÇÑ ¹Ýº¹¹®
-		if ((PINA & _BV(0)) == 0) {  // 0¹øÇÉÀÇ °ª°ú 1°ªÀ» ºñ±³ÇÏ¿´À» ¶§ °ÅÁþ(0)ÀÌ¸é Á¶°Ç¹® ½ÇÇà
-			printf("on");  // "on" Ãâ·Â
-			_delay_ms(1000);  // 1ÃÊ ´ë±â
+	// ìŠ¤ìœ„ì¹˜ë¥¼ ëˆ„ë¥´ë©´ "on" ì¶œë ¥
+	while(1) {  // ë¬´í•œ ë°˜ë³µë¬¸
+		if ((PINA & _BV(0)) == 0) {  // 0ë²ˆí•€ì˜ ê°’ê³¼ 1ê°’ì„ ë¹„êµí•˜ì˜€ì„ ë•Œ ê±°ì§“(0)ì´ë©´ ì¡°ê±´ë¬¸ ì‹¤í–‰
+			printf("on");  // "on" ì¶œë ¥
+			_delay_ms(1000);  // 1ì´ˆ ëŒ€ê¸°
 		}
 	}
 }
