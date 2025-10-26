@@ -1,32 +1,32 @@
-// UART0 ÃÊ±âÈ­
+// UART0 ì´ˆê¸°í™”
 void uart0_init(void) {
-	DDRE &= ~(_BV(0));  // Rx0ÇÉ ÀÔ·ÂÀ¸·Î ¼³Á¤
-	DDRE |= _BV(1);  // Tx0ÇÉ Ãâ·ÂÀ¸·Î ¼³Á¤
-	UCSR0B = 0x00;  // uart ÃÊ±âÈ­ Áß ÀÎÅÍ·´Æ® ºñÈ°¼ºÈ­
-	UCSR0A = 0x00;  // Asynchronous Normal Mode (±âº»°ª)
-	UCSR0C = 0x06;  // ºñµ¿±â ¹æ½Ä, No parity bit, 1 stop bit, 8ºñÆ® µ¥ÀÌÅÍ
+	DDRE &= ~(_BV(0));  // Rx0í•€ ì…ë ¥ìœ¼ë¡œ ì„¤ì •
+	DDRE |= _BV(1);  // Tx0í•€ ì¶œë ¥ìœ¼ë¡œ ì„¤ì •
+	UCSR0B = 0x00;  // uart ì´ˆê¸°í™” ì¤‘ ì¸í„°ëŸ½íŠ¸ ë¹„í™œì„±í™”
+	UCSR0A = 0x00;  // Asynchronous Normal Mode (ê¸°ë³¸ê°’)
+	UCSR0C = 0x06;  // ë¹„ë™ê¸° ë°©ì‹, No parity bit, 1 stop bit, 8ë¹„íŠ¸ ë°ì´í„°
 	UBRR0L = 0x67;  // set baud rate 0x67 for 9600bps, 0x33 for 19200, 0x19 for 38400,  0x6 for 115200bps
 	UBRR0H = 0x00;
-	UCSR0B = 0x18;  // ¼Û¼ö½Å Çã¿ë
+	UCSR0B = 0x18;  // ì†¡ìˆ˜ì‹  í—ˆìš©
 }
 
 int uart0_getchar(void) {
 	char c;
 	while(1) {
-		if ((UCSR0A &  _BV(7)) ==  _BV(7)) {  // ¼ö½Å ¿Ï·á±îÁö ´ë±â (ÀÚµ¿ ÃÊ±âÈ­)
+		if ((UCSR0A &  _BV(7)) ==  _BV(7)) {  // ìˆ˜ì‹  ì™„ë£Œê¹Œì§€ ëŒ€ê¸° (ìë™ ì´ˆê¸°í™”)
 			break;
 		}
 	}
-	c = UDR0;  // µ¥ÀÌÅÍ ÀĞ±â
-	uart0_putchar(c);  // ¿¡ÄÚ
+	c = UDR0;  // ë°ì´í„° ì½ê¸°
+	uart0_putchar(c);  // ì—ì½”
 	return c;
 }
 
 void uart0_putchar(char c) {
-	UCSR0A |= _BV(6);  // ¼Û½Å ¿Ï·á ÇÃ·¡±× ÃÊ±âÈ­
-	UDR0 = c;  // ¼ÛÁø ¹®ÀÚ ÀúÀå
+	UCSR0A |= _BV(6);  // ì†¡ì‹  ì™„ë£Œ í”Œë˜ê·¸ ì´ˆê¸°í™”
+	UDR0 = c;  // ì†¡ì§„ ë¬¸ì ì €ì¥
 	while(1) {
-		if ((UCSR0A & _BV(6)) ==  _BV(6)) {  // ¼Û½Å ¿Ï·á±îÁö ´ë±â
+		if ((UCSR0A & _BV(6)) ==  _BV(6)) {  // ì†¡ì‹  ì™„ë£Œê¹Œì§€ ëŒ€ê¸°
 			break;
 		}
 	}
@@ -34,5 +34,5 @@ void uart0_putchar(char c) {
 
 void init_printf(void) {
 	uart0_init();
-	fdevopen(uart0_putchar, uart0_getchar);  // printf¿¡ ¼Û¼ö½Å ÇÔ¼ö ¿¬°á
+	fdevopen(uart0_putchar, uart0_getchar);  // printfì— ì†¡ìˆ˜ì‹  í•¨ìˆ˜ ì—°ê²°
 }

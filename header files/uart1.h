@@ -1,20 +1,20 @@
-// UART1 ÃÊ±âÈ­
+// UART1 ì´ˆê¸°í™”
 void uart1_init(void) {
-	DDRD &= ~(_BV(2));  // Rx1ÇÉ ÀÔ·ÂÀ¸·Î ¼³Á¤
-	DDRD |= _BV(3);  // Tx1ÇÉ Ãâ·ÂÀ¸·Î ¼³Á¤
-	UCSR1B = 0x00;  // uart ÃÊ±âÈ­ Áß ÀÎÅÍ·´Æ® ºñÈ°¼ºÈ­
-	UCSR1A = 0x00;  // Asynchronous Normal Mode (±âº»°ª)
-	UCSR1C = 0x06;  // ºñµ¿±â ¹æ½Ä, No parity bit, 1 stop bit, 8ºñÆ® µ¥ÀÌÅÍ
+	DDRD &= ~(_BV(2));  // Rx1í•€ ì…ë ¥ìœ¼ë¡œ ì„¤ì •
+	DDRD |= _BV(3);  // Tx1í•€ ì¶œë ¥ìœ¼ë¡œ ì„¤ì •
+	UCSR1B = 0x00;  // uart ì´ˆê¸°í™” ì¤‘ ì¸í„°ëŸ½íŠ¸ ë¹„í™œì„±í™”
+	UCSR1A = 0x00;  // Asynchronous Normal Mode (ê¸°ë³¸ê°’)
+	UCSR1C = 0x06;  // ë¹„ë™ê¸° ë°©ì‹, No parity bit, 1 stop bit, 8ë¹„íŠ¸ ë°ì´í„°
 	UBRR1L = 0x67;  // set baud rate 0x67 for 9600bps, 0x33 for 19200, 0x19 for 38400,  0x6 for 115200bps
 	UBRR1H = 0x00;
-	UCSR1B = 0x08;  // ¼Û½Å Çã¿ë
+	UCSR1B = 0x08;  // ì†¡ì‹  í—ˆìš©
 }
 
 int uart1_putchar(char d) {
 	UCSR1A = _BV(6);
 	UDR1 = d;
 	while(1) {
-		if ((UCSR1A & _BV(6)) == _BV(6)) {  // ¼Û½Å ¿Ï·á±îÁö ´ë±â
+		if ((UCSR1A & _BV(6)) == _BV(6)) {  // ì†¡ì‹  ì™„ë£Œê¹Œì§€ ëŒ€ê¸°
 			break;
 		}
 	}
@@ -22,7 +22,7 @@ int uart1_putchar(char d) {
 
 void uart1_puts(const char *s) {
     while (*s) {
-        uart1_putchar(*s);  // ÇÏ³ª¾¿ Ãâ·Â
+        uart1_putchar(*s);  // í•˜ë‚˜ì”© ì¶œë ¥
         s++;
     }
 }
