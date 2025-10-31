@@ -4,7 +4,7 @@
 #define DHT11_PIN PINB
 #define DHT11_INPUTPIN PB0
 
-// DHT11 초기화
+// DHT11 �ʱ�ȭ
 void dht11_getdata(uint8_t num, uint8_t *data);
 uint8_t getdata(uint8_t select);
  

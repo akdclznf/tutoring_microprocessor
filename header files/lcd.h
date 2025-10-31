@@ -2,41 +2,41 @@
 
 volatile BYTE LCD, lcd_addr;
 
-// LCD ì´ˆê¸°í™”
+// LCD ÃÊ±âÈ­
 void twi_write(unsigned char address, unsigned char data) {
 	TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);  // START
 
-	while (!(TWCR & (1 << TWINT)));  // TWINT í”Œëž˜ê·¸ê°€ ì„¤ì •ë  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼
-	while ((TWSR & 0xF8) != 0x08);  // START ì¡°ê±´ì„ ê¸°ë‹¤ë¦¼
+	while (!(TWCR & (1 << TWINT)));  // TWINT ÇÃ·¡±×°¡ ¼³Á¤µÉ ¶§±îÁö ±â´Ù¸²
+	while ((TWSR & 0xF8) != 0x08);  // START Á¶°ÇÀ» ±â´Ù¸²
 
-	TWDR = (address << 1) & 0xFE;  // 7ë¹„íŠ¸ ì£¼ì†Œ + 0(ì“°ê¸°)
-	TWCR = (1 << TWINT) | (1 << TWEN);  // ì£¼ì†Œ ì „ì†¡
-
-	while (!(TWCR & (1 << TWINT)));
-	while ((TWSR & 0xF8) != 0x18);  // SLA+W ACKì„ ê¸°ë‹¤ë¦¼
-
-	TWDR = data; // ë°ì´í„° ì „ì†¡
-	TWCR = (1 << TWINT) | (1 << TWEN);  // ë°ì´í„° ì „ì†¡
+	TWDR = (address << 1) & 0xFE;  // 7ºñÆ® ÁÖ¼Ò + 0(¾²±â)
+	TWCR = (1 << TWINT) | (1 << TWEN);  // ÁÖ¼Ò Àü¼Û
 
 	while (!(TWCR & (1 << TWINT)));
-	while ((TWSR & 0xF8) != 0x28);  // ë°ì´í„° ACKì„ ê¸°ë‹¤ë¦¼
+	while ((TWSR & 0xF8) != 0x18);  // SLA+W ACKÀ» ±â´Ù¸²
 
-	TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);  // STOP ì¡°ê±´
+	TWDR = data; // µ¥ÀÌÅÍ Àü¼Û
+	TWCR = (1 << TWINT) | (1 << TWEN);  // µ¥ÀÌÅÍ Àü¼Û
+
+	while (!(TWCR & (1 << TWINT)));
+	while ((TWSR & 0xF8) != 0x28);  // µ¥ÀÌÅÍ ACKÀ» ±â´Ù¸²
+
+	TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);  // STOP Á¶°Ç
 }
 
 void LCD_command(BYTE command) {
-	LCD = (command & 0xF0) | 0x0C;  // MSB 4ë¹„íŠ¸, ëª…ë ¹ ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	LCD = (command & 0xF0) | 0x0C;  // MSB 4ºñÆ®, ¸í·É ¸ðµå, ¾²±â ¸ðµå, enable high
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
-	LCD &= ~(_BV(2));  // enable í† ê¸€
+	LCD &= ~(_BV(2));  // enable Åä±Û
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
 
-	LCD = (command & 0x0F) << 4;  // LSB 4ë¹„íŠ¸
-	LCD = LCD | 0x0C;  // ëª…ë ¹ ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	LCD = (command & 0x0F) << 4;  // LSB 4ºñÆ®
+	LCD = LCD | 0x0C;  // ¸í·É ¸ðµå, ¾²±â ¸ðµå, enable high
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
-	LCD &= ~(_BV(2));  // enable í† ê¸€
+	LCD &= ~(_BV(2));  // enable Åä±Û
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
 
@@ -44,18 +44,18 @@ void LCD_command(BYTE command) {
 }
 
 void LCD_data(BYTE data) {
-	LCD = (data & 0xF0) | 0x0D;  // MSB 4ë¹„íŠ¸, ë°ì´í„° ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	LCD = (data & 0xF0) | 0x0D;  // MSB 4ºñÆ®, µ¥ÀÌÅÍ ¸ðµå, ¾²±â ¸ðµå, enable high
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
-	LCD &= ~(_BV(2));  // enable í† ê¸€
+	LCD &= ~(_BV(2));  // enable Åä±Û
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
 
-	LCD = (data & 0x0F) << 4;  // LSB 4ë¹„íŠ¸
-	LCD = LCD | 0x0D;  // ë°ì´í„° ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	LCD = (data & 0x0F) << 4;  // LSB 4ºñÆ®
+	LCD = LCD | 0x0D;  // µ¥ÀÌÅÍ ¸ðµå, ¾²±â ¸ðµå, enable high
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
-	LCD &= ~(_BV(2));  // enable í† ê¸€
+	LCD &= ~(_BV(2));  // enable Åä±Û
 	twi_write(lcd_addr, LCD); 
 	_delay_us(50);
 
@@ -63,9 +63,9 @@ void LCD_data(BYTE data) {
 }
 
 void LCD_string(BYTE command, BYTE *string) {
-	LCD_command(command);  // ë¬¸ìžì—´ ì‹œìž‘ ìœ„ì¹˜ ì„¤ì •
+	LCD_command(command);  // ¹®ÀÚ¿­ ½ÃÀÛ À§Ä¡ ¼³Á¤
 
-	while (*string != '\0') {  // ë¬¸ìžì—´ í‘œì‹œ 
+	while (*string != '\0') {  // ¹®ÀÚ¿­ Ç¥½Ã 
 		LCD_data(*string);
 		string++;
 	}
@@ -73,43 +73,43 @@ void LCD_string(BYTE command, BYTE *string) {
 
 void LCD_nibble(BYTE lcd_addr) {
 	_delay_ms(20);
-	twi_write(lcd_addr, 0x3C);  // ëª…ë ¹ ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	twi_write(lcd_addr, 0x3C);  // ¸í·É ¸ðµå, ¾²±â ¸ðµå, enable high
 	_delay_us(50);
-	twi_write(lcd_addr, 0x38);  // enable í† ê¸€
+	twi_write(lcd_addr, 0x38);  // enable Åä±Û
 	_delay_us(50);
 
 	_delay_ms(4);
-	twi_write(lcd_addr, 0x3C);  // ëª…ë ¹ ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	twi_write(lcd_addr, 0x3C);  // ¸í·É ¸ðµå, ¾²±â ¸ðµå, enable high
 	_delay_us(50);
-	twi_write(lcd_addr, 0x38);  // enable í† ê¸€
+	twi_write(lcd_addr, 0x38);  // enable Åä±Û
 	_delay_us(50);
 
 	_delay_ms(1);
-	twi_write(lcd_addr, 0x2C);  // ëª…ë ¹ ëª¨ë“œ, ì“°ê¸° ëª¨ë“œ, enable high
+	twi_write(lcd_addr, 0x2C);  // ¸í·É ¸ðµå, ¾²±â ¸ðµå, enable high
 	_delay_us(50);
-	twi_write(lcd_addr, 0x28);  // enable í† ê¸€
+	twi_write(lcd_addr, 0x28);  // enable Åä±Û
 	_delay_us(50);
 	twi_write(lcd_addr, 0x2C); 
 	_delay_us(50);
 }
 
 void LCD_initialize(void) {
-	LCD_command(0x3C);  // ê¸°ëŠ¥ ì„¤ì • (8ë¹„íŠ¸, 16x2ë¼ì¸, 5x7 ì )
+	LCD_command(0x3C);  // ±â´É ¼³Á¤ (8ºñÆ®, 16x2¶óÀÎ, 5x7 Á¡)
 	_delay_ms(2);
-	LCD_command(0x08);  // ë””ìŠ¤í”Œë ˆì´ ì„¤ì • (ë””ìŠ¤í”Œë ˆì´ ì¼¬, ì»¤ì„œ ë”, ê¹œë°•ìž„ ë”)
+	LCD_command(0x08);  // µð½ºÇÃ·¹ÀÌ ¼³Á¤ (µð½ºÇÃ·¹ÀÌ ÄÔ, Ä¿¼­ ²û, ±ô¹ÚÀÓ ²û)
 	_delay_ms(2);
-	LCD_command(0x01);  // í™”ë©´ ì§€ìš°ê¸°
+	LCD_command(0x01);  // È­¸é Áö¿ì±â
 	_delay_ms(2);
-	LCD_command(0x06);  // ìž…ë ¥ ëª¨ë“œ ì„¤ì • (ì¦ê°€, ì´ë™ ì—†ìŒ)
+	LCD_command(0x06);  // ÀÔ·Â ¸ðµå ¼³Á¤ (Áõ°¡, ÀÌµ¿ ¾øÀ½)
 	_delay_ms(2);
-	LCD_command(0x02);  // í™ˆìœ¼ë¡œ ëŒì•„ê°€ê¸°
+	LCD_command(0x02);  // È¨À¸·Î µ¹¾Æ°¡±â
 	_delay_ms(2);
 }
 
 void LCD_setting() {
-	lcd_addr = 0x27;  // LCD I2C ì£¼ì†Œ
+	lcd_addr = 0x27;  // LCD I2C ÁÖ¼Ò
 
-	// TWI (I2C) ì´ˆê¸°í™”
-	TWSR = 0x01;  // í”„ë¦¬ìŠ¤ì¼€ì¼ëŸ¬ 4 ì„¤ì •
-	TWBR = 18;  // SCL ì£¼íŒŒìˆ˜ 100 kHzë¡œ ì„¤ì •
+	// TWI (I2C) ÃÊ±âÈ­
+	TWSR = 0x01;  // ÇÁ¸®½ºÄÉÀÏ·¯ 4 ¼³Á¤
+	TWBR = 18;  // SCL ÁÖÆÄ¼ö 100 kHz·Î ¼³Á¤
 }
