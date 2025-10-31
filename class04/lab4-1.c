@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -14,18 +14,18 @@
 #include "uart0.h"
 
 void main(void) {
-	_delay_ms(500);  // ºÎÆÃ ½Ã°£
+	_delay_ms(500);  // ë¶€íŒ… ì‹œê°„
 
-	uint16_t adc_data = 0;  // ADC°ª ÀúÀåÇÒ º¯¼ö ¼±¾ğ
+	uint16_t adc_data = 0;  // ADCê°’ ì €ì¥í•  ë³€ìˆ˜ ì„ ì–¸
 
-	MCUCR =0x0;  // port ÀÔÃâ·Â ¼³Á¤
+	MCUCR =0x0;  // port ì…ì¶œë ¥ ì„¤ì •
 	XMCRB =0x0;
 
 	init_printf();
 
-	// ADC ¼³Á¤
-	ADMUX  = 0x40;  // ADC0 (PF0) ¼±ÅÃ
-	_delay_ms(100);  // ADMUX ¼±ÅÃ µô·¹ÀÌ
+	// ADC ì„¤ì •
+	ADMUX  = 0x40;  // ADC0 (PF0) ì„ íƒ
+	_delay_ms(100);  // ADMUX ì„ íƒ ë”œë ˆì´
 
 	ADCSRA |= _BV(5);  // free running mode
 
@@ -33,13 +33,13 @@ void main(void) {
 	ADCSRA |= _BV(1);
 	ADCSRA |= _BV(0);
 
-	ADCSRA |= _BV(7);  // ADC Çã¿ë
-	ADCSRA |= _BV(6);  // ADC º¯È¯ ½ÃÀÛ
+	ADCSRA |= _BV(7);  // ADC í—ˆìš©
+	ADCSRA |= _BV(6);  // ADC ë³€í™˜ ì‹œì‘
 
-	_delay_ms(500);  // ¾ÈÁ¤È­ ´ë±â
+	_delay_ms(500);  // ì•ˆì •í™” ëŒ€ê¸°
 
 	while (1) {
-		adc_data = ADCW;  // ADC °ª ÀĞ°í º¯¼ö¿¡ ÀúÀå
+		adc_data = ADCW;  // ADC ê°’ ì½ê³  ë³€ìˆ˜ì— ì €ì¥
 		printf("Adc Data = %d\r\n", adc_data);
 		_delay_ms(1000);
 	}

@@ -1,6 +1,6 @@
-#define F_CPU 16000000UL  // Å¬·° ÁÖÆÄ¼ö ¼³Á¤
+#define F_CPU 16000000UL  // í´ëŸ­ ì£¼íŒŒìˆ˜ ì„¤ì •
 
-#include <avr/io.h>  // ¶óÀÌºê·¯¸®, Çì´õÆÄÀÏ ºÒ·¯¿À±â
+#include <avr/io.h>  // ë¼ì´ë¸ŒëŸ¬ë¦¬, í—¤ë”íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 #include <util/delay.h>
 #include <compat/twi.h>
 #include <stdio.h>
@@ -13,44 +13,44 @@
 
 #include "uart0.h"
 
-volatile uint16_t light = 0;  // Á¶µµ ¼¾¼­ °ª ÀúÀåÇÒ º¯¼ö
-volatile uint16_t water = 0;  // ¼öÀ§ ¼¾¼­
-volatile uint16_t soil = 0;  // ¼öºĞ ¼¾¼­
+volatile uint16_t light = 0;  // ì¡°ë„ ì„¼ì„œ ê°’ ì €ì¥í•  ë³€ìˆ˜
+volatile uint16_t water = 0;  // ìˆ˜ìœ„ ì„¼ì„œ
+volatile uint16_t soil = 0;  // ìˆ˜ë¶„ ì„¼ì„œ
 
-// Á¶µµ ¼¾¼­ ÇÔ¼ö
+// ì¡°ë„ ì„¼ì„œ í•¨ìˆ˜
 uint16_t light_level(void) {
-	ADMUX  = 0x40;  // ADC0 (PF0) ¼±ÅÃ
-	_delay_ms(100);  // ADMUX ¼±ÅÃ µô·¹ÀÌ
-	ADCSRA |= _BV(6);  // ADC º¯È¯ ½ÃÀÛ
-	return ADCW;  // °ª ¹İÈ¯
+	ADMUX  = 0x40;  // ADC0 (PF0) ì„ íƒ
+	_delay_ms(100);  // ADMUX ì„ íƒ ë”œë ˆì´
+	ADCSRA |= _BV(6);  // ADC ë³€í™˜ ì‹œì‘
+	return ADCW;  // ê°’ ë°˜í™˜
 }
 
-// ¼öÀ§ ¼¾¼­ ÇÔ¼ö
+// ìˆ˜ìœ„ ì„¼ì„œ í•¨ìˆ˜
 uint16_t water_level(void) {
-	ADMUX  = 0x41;  // ADC1 (PF1) ¼±ÅÃ
+	ADMUX  = 0x41;  // ADC1 (PF1) ì„ íƒ
 	_delay_ms(100);
 	ADCSRA |= _BV(6);
 	return ADCW;
 }
 
-// ¼öºĞ ¼¾¼­ ÇÔ¼ö
+// ìˆ˜ë¶„ ì„¼ì„œ í•¨ìˆ˜
 uint16_t soil_level(void) {
-	ADMUX  = 0x42;  // ADC2 (PF2) ¼±ÅÃ
+	ADMUX  = 0x42;  // ADC2 (PF2) ì„ íƒ
 	_delay_ms(100);
 	ADCSRA |= _BV(6);
 	return ADCW;
 }
 
 int main(void) {
-	_delay_ms(500);  // ºÎÆÃ ½Ã°£
+	_delay_ms(500);  // ë¶€íŒ… ì‹œê°„
 
-	MCUCR =0x0;  // port ÀÔÃâ·Â ¼³Á¤
+	MCUCR =0x0;  // port ì…ì¶œë ¥ ì„¤ì •
 	XMCRB =0x0;
 
-	init_printf();  // printf »ç¿ë
+	init_printf();  // printf ì‚¬ìš©
 
-	// ADC ¼³Á¤
-	ADCSRA |= _BV(7);  // ADC Çã¿ë
+	// ADC ì„¤ì •
+	ADCSRA |= _BV(7);  // ADC í—ˆìš©
 
 	ADCSRA |= _BV(5);  // free running mode
 
@@ -58,12 +58,12 @@ int main(void) {
 	ADCSRA |= _BV(1);
 	ADCSRA |= _BV(0);
 
-	_delay_ms(500);  // ¾ÈÁ¤È­ ´ë±â
+	_delay_ms(500);  // ì•ˆì •í™” ëŒ€ê¸°
 
 	while (1) {
-		light = light_level();  // Á¶µµ ¼¾¼­ °ª ÀúÀå
-		water = water_level();  // ¼öÀ§ ¼¾¼­
-		soil = soil_level();  // ¼öºĞ ¼¾¼­
+		light = light_level();  // ì¡°ë„ ì„¼ì„œ ê°’ ì €ì¥
+		water = water_level();  // ìˆ˜ìœ„ ì„¼ì„œ
+		soil = soil_level();  // ìˆ˜ë¶„ ì„¼ì„œ
 		printf("Light Level = %u\r\n", light);
 		printf("Water Level = %u\r\n", water);
 		printf("Soil Level = %u\r\n", soil);
