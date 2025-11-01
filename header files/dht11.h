@@ -1,14 +1,10 @@
 #define DHT11_ERROR 255
-#define DHT11_DDR DDRB
-#define DHT11_PORT PORTB
-#define DHT11_PIN PINB
-#define DHT11_INPUTPIN PB0
 
-// DHT11 ÃÊ±âÈ­
+// dht11 초기화
 void dht11_getdata(uint8_t num, uint8_t *data);
 uint8_t getdata(uint8_t select);
  
-/* get data from dht11 */
+// get data from dht11
 uint8_t getdata(uint8_t select) {
 	uint8_t bits[5];
 	uint8_t i, j = 0;
