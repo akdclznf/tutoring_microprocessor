@@ -13,7 +13,7 @@
 
 #include "uart0.h"
 
-volatile int_count = 0;
+volatile int_count = 0;  // int_count를 전역 변수로 선언
 
 ISR(TIMER0_COMP_vect) {  // 약 1초마다 ON 출력
 	int_count ++;
@@ -31,14 +31,16 @@ int main(void) {
 
 	init_printf();
 
-	TCCR0 &= ~(_BV(6));  // CTC mode
+	// CTC mode 설정: WGM00(TCCR0 6번): 0, WGM01(TCCR0 3번): 1
+	TCCR0 &= ~(_BV(6));
 	TCCR0 |= _BV(3);
 
-	TCCR0 |= _BV(2);  // 분주 1024
+	// 분주 1024 설정: CS02(TCCR0 2번): 1, CS01(TCCR0 1번): 1, CS00(TCCR0 0번): 1
+	TCCR0 |= _BV(2);
 	TCCR0 |= _BV(1);
 	TCCR0 |= _BV(0);
 
-	OCR0 = 127;  // 지정 값
+	OCR0 = 127;  // OCR 값 지정
 
 	TIMSK |= _BV(1);  // COMP0 인터럽트 허용
 

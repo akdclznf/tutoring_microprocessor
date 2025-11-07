@@ -68,7 +68,7 @@ int main(void) {
 		printf("Humidity: %d\n\r", humidity);
 		_delay_ms(100);
 
-		itoa(temp, message_a, 10); // 숫자를 10바이트 문자로 변환
+		itoa(temp, message_a, 10);  // 숫자를 10바이트 문자로 변환
 		itoa(humidity, message_b, 10);
 
 		uart1_puts("Temperature: ");

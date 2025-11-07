@@ -11,7 +11,7 @@
 #include <math.h>
 #include <avr/pgmspace.h>
 
-#include "lcd.h"
+#include "lcd.h"  // lcd.h 헤더 파일 가져오기
 
 int main(void) {
 	_delay_ms(100);  // 부팅시간
@@ -24,19 +24,19 @@ int main(void) {
 	LCD_setting();
 	LCD_nibble(lcd_addr);
 	LCD_initialize();
-	LCD_command(0x01);  // 화면 지우기
+	LCD_command(0x01);
 	_delay_ms(10);
 
 	while(1) {
-		LCD_string(0x80, "Hello");
-		LCD_string(0xC0, "World!");
+		LCD_string(0x80, "Hello");  // lcd화면 첫번째 줄 첫번째 칸 부터 "Hello" 출력
+		LCD_string(0xC0, "World!");  // lcd화면 두번째 줄 첫번째 칸 부터 "World" 출력
 		_delay_ms(1000);
-		//LCD_command(0x01);
-		//_delay_ms(10);
-		LCD_string(0x80, "Hasung");
-		LCD_string(0xC0, "Tutoring");
+		LCD_command(0x01);  // 화면 초기화
+		_delay_ms(10);
+		LCD_string(0x80, "Hasung");  // lcd화면 첫번째 줄 첫번째 칸 부터 "Hansung" 출력
+		LCD_string(0xC0, "Tutoring");  // lcd화면 두번째 줄 첫번째 칸 부터 "Tutoring" 출력
 		_delay_ms(1000);
-		//LCD_command(0x01);
-		//_delay_ms(10);
+		LCD_command(0x01);  // 화면 초기화
+		_delay_ms(10);
 	}
 }
