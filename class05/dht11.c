@@ -43,7 +43,7 @@ int main(void) {
 		_delay_ms(2000);
 
 		// 온습도 값 출력
-		printf("Temperature: %d\n\r", temp);
-		printf("Humidity: %d\n\r", humidity);
+		printf("Temperature = %d\n\r", temp);
+		printf("Humidity = %d\n\r", humidity);
 	}
 }
