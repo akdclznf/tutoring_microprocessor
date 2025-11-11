@@ -147,6 +147,7 @@ int main(void) {
 		printf("Water Level : %u\r\n", water);
 		printf("Soil Level : %u\r\n", soil);
 		printf("Count : %d\n\r", count_overflow);
+		printf("\n\r");
 		_delay_ms(100);
 
 		// 온습도 값을 10바이트 문자로 변환
@@ -159,6 +160,7 @@ int main(void) {
 		uart1_puts("\n\r");
 		uart1_puts("Humidity : ");
 		uart1_puts(message_b);
+		uart1_puts("\n\r");
 		uart1_puts("\n\r");
 
 		LCD_command(0x01);  // 화면 지우기
