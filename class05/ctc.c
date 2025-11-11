@@ -14,11 +14,12 @@
 #include "uart0.h"
 
 volatile int_count = 0;  // int_count를 전역 변수로 선언
+volatile count = 0;  // 인터럽트 발생 횟수 저장
 
-ISR(TIMER0_COMP_vect) {  // 약 1초마다 ON 출력
+ISR(TIMER0_COMP_vect) {  // 약 1초마다 카운트 증가
 	int_count ++;
 	if (int_count >= 122) {
-		printf("ON\n\r");
+		count ++;
 		int_count = 0;
 	}
 }
@@ -47,5 +48,7 @@ int main(void) {
 	sei();  // 전역 인터럽트 허용
 
 	while(1) {
+		printf("Count : %d\n\r", count);  // 카운트 출력
+		_delay_ms(1000);
 	}
 }
