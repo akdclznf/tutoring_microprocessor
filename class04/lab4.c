@@ -63,9 +63,9 @@ int main(void) {
 		light = light_level();  // 조도 센서 값 저장
 		water = water_level();  // 수위 센서
 		soil = soil_level();  // 수분 센서
-		printf("Light Level = %u\r\n", light);
-		printf("Water Level = %u\r\n", water);
-		printf("Soil Level = %u\r\n", soil);
+		printf("Light Level : %u\r\n", light);
+		printf("Water Level : %u\r\n", water);
+		printf("Soil Level : %u\r\n", soil);
 		_delay_ms(1000);
 	}
 }
