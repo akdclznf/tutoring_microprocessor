@@ -18,8 +18,8 @@ void main(void) {
 
 	uint16_t adc_data = 0;  // ADC값 저장할 변수 선언
 
-	MCUCR =0x0;  // port 입출력 설정
-	XMCRB =0x0;
+	MCUCR = 0x0;  // port 입출력 설정
+	XMCRB = 0x0;
 
 	init_printf();
 
@@ -29,11 +29,12 @@ void main(void) {
 
 	ADCSRA |= _BV(5);  // free running mode
 
-	ADCSRA |= _BV(2);  // prescaler 128
+	ADCSRA |= _BV(0);  // prescaler 128
 	ADCSRA |= _BV(1);
-	ADCSRA |= _BV(0);
+	ADCSRA |= _BV(2);
 
 	ADCSRA |= _BV(7);  // ADC 허용
+	
 	ADCSRA |= _BV(6);  // ADC 변환 시작
 
 	_delay_ms(500);  // 안정화 대기
