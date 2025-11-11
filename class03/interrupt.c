@@ -20,8 +20,8 @@ volatile uint16_t count_overflow = 0;
 int main(void) {
 	_delay_ms(500);  // 부팅 시간
 
-	MCUCR =0x0;  // port 입출력 설정
-	XMCRB =0x0;
+	MCUCR = 0x0;  // port 입출력 설정
+	XMCRB = 0x0;
 
 	init_printf();  // printf 사용
 
@@ -48,7 +48,7 @@ int main(void) {
 	_delay_ms(500);  // 안정화 시간
 
 	while(1) {
-		printf("i: %d\n\r", i);  // 1초마다 변수 출력
+		printf("i : %d\n\r", i);  // 1초마다 변수 출력
 		_delay_ms(1000);
 	}
 }
