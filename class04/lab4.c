@@ -21,7 +21,6 @@ volatile uint16_t soil = 0;  // 수분 센서
 uint16_t light_level(void) {
 	ADMUX  = 0x40;  // ADC0 (PF0) 선택
 	_delay_ms(100);  // ADMUX 선택 딜레이
-	ADCSRA |= _BV(6);  // ADC 변환 시작
 	return ADCW;  // 값 반환
 }
 
@@ -29,7 +28,6 @@ uint16_t light_level(void) {
 uint16_t water_level(void) {
 	ADMUX  = 0x41;  // ADC1 (PF1) 선택
 	_delay_ms(100);
-	ADCSRA |= _BV(6);
 	return ADCW;
 }
 
@@ -37,7 +35,6 @@ uint16_t water_level(void) {
 uint16_t soil_level(void) {
 	ADMUX  = 0x42;  // ADC2 (PF2) 선택
 	_delay_ms(100);
-	ADCSRA |= _BV(6);
 	return ADCW;
 }
 
@@ -54,13 +51,15 @@ int main(void) {
 
 	ADCSRA |= _BV(5);  // free running mode
 
-	ADCSRA |= _BV(2);  // prescaler 128
+	ADCSRA |= _BV(0);  // prescaler 128
 	ADCSRA |= _BV(1);
-	ADCSRA |= _BV(0);
+	ADCSRA |= _BV(2);
+
+	ADCSRA |= _BV(6);  // ADC 변환 시작
 
 	_delay_ms(500);  // 안정화 대기
 
-	while (1) {
+	while(1) {
 		light = light_level();  // 조도 센서 값 저장
 		water = water_level();  // 수위 센서
 		soil = soil_level();  // 수분 센서
