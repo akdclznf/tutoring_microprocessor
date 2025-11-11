@@ -23,7 +23,7 @@ int main(void) {
 	DDRB |= _BV(6);
 	DDRB |= _BV(7);
 
-	set_color(255, 0, 0);  // white
+	set_color(255, 255, 255);  // white
 	_delay_ms(1000);
 	set_color(255, 0, 0);  // red
 	_delay_ms(1000);
