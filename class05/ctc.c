@@ -31,14 +31,14 @@ int main(void) {
 
 	init_printf();
 
-	// CTC mode 설정: WGM00(TCCR0 6번): 0, WGM01(TCCR0 3번): 1
-	TCCR0 &= ~(_BV(6));
+	// CTC mode 설정 : WGM01(TCCR0 3번) : 1, WGM00(TCCR0 6번) : 0
 	TCCR0 |= _BV(3);
+	TCCR0 &= ~(_BV(6));
 
-	// 분주 1024 설정: CS02(TCCR0 2번): 1, CS01(TCCR0 1번): 1, CS00(TCCR0 0번): 1
-	TCCR0 |= _BV(2);
-	TCCR0 |= _BV(1);
+	// 분주 1024 설정 : CS02(TCCR0 0번) : 1, CS01(TCCR0 1번) : 1, CS00(TCCR0 2번) : 1
 	TCCR0 |= _BV(0);
+	TCCR0 |= _BV(1);
+	TCCR0 |= _BV(2);
 
 	OCR0 = 127;  // OCR 값 지정
 
