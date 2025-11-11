@@ -8,7 +8,7 @@ void set_color(int red, int green, int blue) {  // 각 핀의 최대값으로 25
 	OCR1_B = blue & 255;
 }
 
-void init_rgb_timer() {  // 16bit 카운터로 8bit(256) 연산을 보기 쉽게 하기 위해 fast pwm 설정
+void init_rgb_timer(void) {  // 16bit 카운터로 8bit(256) 연산을 보기 쉽게 하기 위해 fast pwm 설정
 	TCCR1A |= _BV(WGM10);
 	TCCR1A |= _BV(COM1A1);
 	TCCR1A |= _BV(COM1B1);
