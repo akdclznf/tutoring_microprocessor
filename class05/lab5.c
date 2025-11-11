@@ -29,6 +29,7 @@ int main(void) {
 
 	uint8_t temp = 0;
 	uint8_t humidity = 0;
+	
 	char message_a[10] = {0};  // 10바이트 문자 저장
 	char message_b[10] = {0};
 
@@ -64,17 +65,17 @@ int main(void) {
 		_delay_ms(2000);
 
 		// 온습도 값 출력
-		printf("Temperature: %d\n\r", temp);
-		printf("Humidity: %d\n\r", humidity);
+		printf("Temperature : %d\n\r", temp);
+		printf("Humidity : %d\n\r", humidity);
 		_delay_ms(100);
 
 		itoa(temp, message_a, 10);  // 숫자를 10바이트 문자로 변환
 		itoa(humidity, message_b, 10);
 
-		uart1_puts("Temperature: ");
+		uart1_puts("Temperature : ");
 		uart1_puts(message_a);
 		uart1_puts("\n\r");
-		uart1_puts("Humidity: ");
+		uart1_puts("Humidity : ");
 		uart1_puts(message_b);
 		uart1_puts("\n\r");
 
