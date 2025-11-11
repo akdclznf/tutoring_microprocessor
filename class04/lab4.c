@@ -47,14 +47,14 @@ int main(void) {
 	init_printf();  // printf 사용
 
 	// ADC 설정
-	ADCSRA |= _BV(7);  // ADC 허용
-
 	ADCSRA |= _BV(5);  // free running mode
 
 	ADCSRA |= _BV(0);  // prescaler 128
 	ADCSRA |= _BV(1);
 	ADCSRA |= _BV(2);
 
+	ADCSRA |= _BV(7);  // ADC 허용
+	
 	ADCSRA |= _BV(6);  // ADC 변환 시작
 
 	_delay_ms(500);  // 안정화 대기
