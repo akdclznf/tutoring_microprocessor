@@ -41,7 +41,7 @@ void main(void) {
 
 	while (1) {
 		adc_data = ADCW;  // ADC 값 읽고 변수에 저장
-		printf("Adc Data = %d\r\n", adc_data);
+		printf("Adc Data : %d\r\n", adc_data);
 		_delay_ms(1000);
 	}
 }
